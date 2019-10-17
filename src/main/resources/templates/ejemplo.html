@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+<body>
+	<button id="boton">Realizar Peticion</button>
+
+	<table border="1">
+		<tr>
+			<th>Nombres</th>
+		</tr>
+		<tbody id="datos">
+
+		</tbody>
+	</table>
+
+	<!--Para JQUERY-->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+       $(document).ready(function(){
+           $("#boton").click(peticionAjax);
+       });
+
+       function peticionAjax(){
+            $.ajax({
+                url:"/prueba/pruebaAjax",
+                method:"Get",
+                success:function(respuesta){
+                    alert("Valores de respuesta del servidor: "+respuesta);
+                    //Creamos la variable para el tbody
+                    //del id
+                    var datosTabla=$("#datos");
+                    //console.log(respuesta);
+                    
+				//for each, iterando el arreglo
+				//retornando respuesta
+                  respuesta.forEach(item => {
+                	  //console.log(item);
+                	  
+                      datosTabla.append("<tr>"
+                        +"<td>"+item+"</td>"
+                        +"</tr>");
+                  });
+                    
+                },
+                error:function(respuesta){
+                    alert("error en la peticion: "+respuesta);
+                }
+            });
+       }
+
+
+   </script>
+
+</body>
+</html>

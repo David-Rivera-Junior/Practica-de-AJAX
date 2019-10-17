@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+
+<body>
+
+	<input id="num" type="number" placeholder="Digite un Numero">
+	<button id="btnCalcular">Calcular</button>
+
+	<div id="Resultado"></div>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<script>
+		$(document).ready(inicio);
+
+		function inicio() {
+			//Programar el evento clip del boton
+			var boton = $("#btnCalcular");
+			boton.click(peticion);
+		}
+
+		function peticion() {
+			var valorinput = $("#num").val();
+
+			$.ajax({
+				url : "/prueba/cuadrado",
+				method : "Get",
+				data : {
+					num : valorinput
+				},
+				success : procesar,
+				error : error
+			});
+
+		}
+		function procesar(response) {
+			//Se Inserta el valor en el div
+			var div = $("#Resultado");
+			div.html("<h1>" + response.res + "<h1>");
+		}
+		function error(response) {
+			alert("Error en la peticion: "+response);
+		}
+	</script>
+
+</body>
+</html>

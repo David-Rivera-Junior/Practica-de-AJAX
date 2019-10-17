@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<div id="Resultado"></div>
+<body>
+	<input id="num1" type="number" placeholder="Digite un Numero">
+	<input id="num2" type="number" placeholder="Digite un Numero">
+	<button id="btnCalcular">Calcular</button>
+	<table border="5">
+		<tr>
+			<td>Operaciones</td>
+			<td>Resultado</td>
+		</tr>
+		<tbody id=tdatos>
+		
+		</tbody>
+
+	</table>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<script>
+	
+		$(document).ready(inicio);
+
+		function inicio() {
+			//Programar el evento clip del boton
+			var boton=$("#btnCalcular");
+			boton.click(peticion);
+		}
+		
+
+		function peticion() {
+			var valorInput1=$("#num1").val();
+			var valorInput2=$("#num2").val();
+			$.ajax({
+				url:"/prueba/operaciones",
+				method:"Get",
+				data:{
+					num1:valorInput1,
+					num2:valorInput2
+				},
+			success:procesar,
+			error:error
+			});
+
+		}
+		function procesar(response){
+			//Se Inserta el valor en el div
+			var tdatos=$("#tdatos");
+			tdatos.html(""
+					+"<tr>"
+					+"<td>Suma</td>"
+					+"<td>"+response.Suma+"</td>"
+					+"</tr>"
+					+"<tr>"
+					+"<td>Resta</td>"
+					+"<td>"+response.Resta+"</td>"
+					+"</tr>"
+					+"<tr>"
+					+"<td>Multiplicacion</td>"
+					+"<td>"+response.Multiplicacion+"</td>"
+					+"</tr>"
+					+"<tr>"
+					+"<td>Division</td>"
+					+"<td>"+response.Division+"</td>"
+					+"</tr>");
+		}
+		
+		function error(response){
+			alert("Error en la peticion: "+response);
+			
+		}
+		
+	</script>
+
+</body>
+</html>
